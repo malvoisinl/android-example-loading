@@ -2,27 +2,35 @@ package fr.iut_amiens.loadingapplication;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.widget.ProgressBar;
+import android.os.VibrationEffect;
+import android.util.Log;
+import android.widget.Button;
+import android.widget.NumberPicker;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class LoadingTask extends AsyncTask<Object, Integer, String> {
 
     private final Context context;
+    private final TextView textView;
+    private final NumberPicker numberPicker;
+    private final Button button;
 
-    private final ProgressBar progressBar;
-
-    public LoadingTask(Context context, ProgressBar progressBar) {
+    public LoadingTask(Context context, TextView textView, NumberPicker numberPicker, Button button) {
         this.context = context;
-        this.progressBar = progressBar;
+        this.textView = textView;
+        this.numberPicker = numberPicker;
+        this.button = button;
     }
 
     @Override
     protected String doInBackground(Object[] params) {
         try {
-            int progress = 0;
-            while (progress < 100) {
-                Thread.sleep(30);
-                progress++;
+            int progress = numberPicker.getValue();
+            Log.d("", "======================= doInBackground: "+progress);
+            while (progress > 0) {
+                Thread.sleep(1000);
+                progress--;
                 publishProgress(progress);
             }
         } catch (InterruptedException e) {
@@ -33,23 +41,26 @@ public class LoadingTask extends AsyncTask<Object, Integer, String> {
 
     @Override
     protected void onPreExecute() {
-        progressBar.setProgress(0);
+        textView.setText(numberPicker.getValue()+"");
         Toast.makeText(context, "démarrage", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     protected void onPostExecute(String s) {
-        progressBar.setProgress(100);
+        textView.setText("0");
+        button.setText("Start");
+        VibrationEffect Create(100, 255);
         Toast.makeText(context, s, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     protected void onProgressUpdate(Integer... values) {
-        progressBar.setProgress(values[0]);
+        textView.setText(values[0].toString());
     }
 
     @Override
     protected void onCancelled() {
         Toast.makeText(context, "cancelled", Toast.LENGTH_SHORT).show();
+        textView.setText("0");
     }
 }
