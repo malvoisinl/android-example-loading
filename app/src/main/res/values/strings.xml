@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Loading Application</string>
+    <string name="app_name">TP2 - Compte à rebours</string>
     <string name="start">Start</string>
     <string name="cancel">Cancel</string>
     <string name="timeLeftText">0</string>

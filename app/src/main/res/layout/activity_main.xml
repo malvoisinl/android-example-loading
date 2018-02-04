@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
@@ -10,38 +11,47 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="fr.iut_amiens.loadingapplication.MainActivity">
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:text="@string/start" />
-
     <TextView
         android:id="@+id/timeLeft"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/button"
-        android:layout_centerHorizontal="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignTop="@+id/floatingActionButton"
+        android:layout_toStartOf="@+id/floatingActionButton"
         android:text="@string/timeLeftText"
+        android:textAlignment="center"
         android:textSize="30sp" />
 
     <NumberPicker
         android:id="@+id/numberPickerSecond"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/timeLeft"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/timeLeft"
         android:layout_alignParentTop="true"
-        android:layout_alignStart="@+id/timeLeft" />
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="30dp"
+        android:layout_toStartOf="@+id/floatingActionButton" />
 
     <NumberPicker
         android:id="@+id/numberPickerMinutes"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/timeLeft"
         android:layout_alignParentTop="true"
-        android:layout_toLeftOf="@+id/numberPickerSecond"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
         android:layout_toStartOf="@+id/numberPickerSecond" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:clickable="true"
+        app:backgroundTint="@android:color/holo_green_dark"
+        app:srcCompat="@android:drawable/ic_menu_recent_history" android:focusable="true" />
 
 </RelativeLayout>
