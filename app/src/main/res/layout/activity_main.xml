@@ -25,14 +25,23 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/button"
         android:layout_centerHorizontal="true"
-        android:text="0" />
+        android:text="@string/timeLeftText"
+        android:textSize="30sp" />
 
     <NumberPicker
-        android:id="@+id/numberPicker2"
+        android:id="@+id/numberPickerSecond"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/button"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="24dp" />
+        android:layout_alignLeft="@+id/timeLeft"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/timeLeft" />
+
+    <NumberPicker
+        android:id="@+id/numberPickerMinutes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@+id/numberPickerSecond"
+        android:layout_toStartOf="@+id/numberPickerSecond" />
 
 </RelativeLayout>

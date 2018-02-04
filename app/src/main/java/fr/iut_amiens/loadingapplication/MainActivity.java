@@ -4,14 +4,12 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.NumberPicker;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private NumberPicker numberPicker;
+    private NumberPicker numberPickerSeconds, numberPickerMinutes;
     private TextView textView;
     private Button button;
     private LoadingTask loadingTask = null;
@@ -21,12 +19,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        numberPicker = (NumberPicker) findViewById(R.id.numberPicker2);
-        button = (Button) findViewById(R.id.button);
-        textView = (TextView) findViewById(R.id.timeLeft);
+        numberPickerSeconds = findViewById(R.id.numberPickerSecond);
+        numberPickerMinutes = findViewById(R.id.numberPickerMinutes);
+        button = findViewById(R.id.button);
+        textView = findViewById(R.id.timeLeft);
 
-        numberPicker.setMinValue(0);
-        numberPicker.setMaxValue(60);
+        numberPickerSeconds.setMinValue(0);
+        numberPickerSeconds.setMaxValue(60);
+        numberPickerMinutes.setMinValue(0);
+        numberPickerMinutes.setMaxValue(60);
 
         button.setOnClickListener(this);
     }
@@ -38,7 +39,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             loadingTask = null;
             button.setText(R.string.start);
         } else {
-            loadingTask = new LoadingTask(this, textView, numberPicker, button);
+            int totalSeconds = numberPickerSeconds.getValue() + numberPickerMinutes.getValue()*60;
+            loadingTask = new LoadingTask(this, textView, totalSeconds, button);
             loadingTask.execute();
             button.setText(R.string.cancel);
         }
