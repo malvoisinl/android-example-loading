@@ -10,15 +10,13 @@ import android.view.View;
 import android.widget.NumberPicker;
 import android.widget.TextView;
 
-import java.time.LocalTime;
-
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, NumberPicker.OnValueChangeListener {
 
     private NumberPicker numberPickerSeconds, numberPickerMinutes;
     private TextView textView;
     private FloatingActionButton floatingActionButton;
     private LoadingTask loadingTask = null;
-    private LocalTime timer = LocalTime.of(0,0,0);
+    private int timerInMilliseconds = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,9 +45,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             loadingTask = null;
             floatingActionButton.setBackgroundTintList(ColorStateList.valueOf(Color.GREEN));
         } else {
-            timer = LocalTime.of(0, numberPickerMinutes.getValue(),numberPickerSeconds.getValue());
-            Log.d("===================", "doInBackground: "+timer.toString());
-            loadingTask = new LoadingTask(this, textView, timer, floatingActionButton);
+            timerInMilliseconds = numberPickerMinutes.getValue()*60000+numberPickerSeconds.getValue()*1000;
+            Log.d("===================", "doInBackground: "+timerInMilliseconds);
+            loadingTask = new LoadingTask(this, textView, floatingActionButton, timerInMilliseconds);
             loadingTask.execute();
             floatingActionButton.setBackgroundTintList(ColorStateList.valueOf(Color.RED));
         }
@@ -57,6 +55,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onValueChange(NumberPicker numberPicker, int i, int i1) {
-        textView.setText(LocalTime.of(0, numberPickerMinutes.getValue(),numberPickerSeconds.getValue()).toString());
+        timerInMilliseconds = numberPickerMinutes.getValue()*60000+numberPickerSeconds.getValue()*1000;
+        DisplayTime();
+    }
+    public void DisplayTime(){
+        int minutes = 0, seconds = 0;
+        String textToDisplay;
+        try {
+            minutes = timerInMilliseconds/60000;
+            seconds = (timerInMilliseconds/1000)%60;
+        }
+        catch (Exception e){
+            Log.d("Exception ===========>", "DisplayTime: "+e.getMessage());
+        }
+        if (minutes < 10){textToDisplay = "0"+minutes;}
+        else {textToDisplay = ( String.valueOf(minutes));}
+        if (seconds < 10){textToDisplay += ":0"+seconds;}
+        else {textToDisplay += ":"+String.valueOf(seconds);}
+
+        textView.setText(textToDisplay);
     }
 }

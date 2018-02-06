@@ -2,5 +2,5 @@
     <string name="app_name">TP2 - Compte à rebours</string>
     <string name="start">Start</string>
     <string name="cancel">Cancel</string>
-    <string name="timeLeftText">0</string>
+    <string name="timeLeftText">00:00</string>
 </resources>

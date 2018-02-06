@@ -15,13 +15,13 @@ public class LoadingTask extends AsyncTask<Object, Integer, String> {
 
     private final Context context;
     private final TextView textView;
-    private final LocalTime timer;
+    private final Integer timerInMilliseconds;
     private final FloatingActionButton floatingActionButton;
 
-    public LoadingTask(Context context, TextView textView, LocalTime timer, FloatingActionButton floatingActionButton) {
+    public LoadingTask(Context context, TextView textView, FloatingActionButton floatingActionButton, Integer timerInMilliseconds) {
         this.context = context;
         this.textView = textView;
-        this.timer = timer;
+        this.timerInMilliseconds = timerInMilliseconds;
         this.floatingActionButton = floatingActionButton;
     }
 
@@ -29,9 +29,9 @@ public class LoadingTask extends AsyncTask<Object, Integer, String> {
     protected String doInBackground(Object[] params) {
         try {
             //int progress = timer.getSecond()+timer.getMinute()*60;
-            int minutes = timer.getMinute();
-            int seconds = timer.getSecond();
-            Log.d("", "======================= doInBackground: "+timer.toString());
+            int minutes = timerInMilliseconds/60000;
+            int seconds = (timerInMilliseconds/1000)%60;
+            Log.d("", "======================= doInBackground: "+timerInMilliseconds);
             while (minutes*60+seconds > 0) {
                 Thread.sleep(1000);
                 if (seconds <= 0){
@@ -51,27 +51,52 @@ public class LoadingTask extends AsyncTask<Object, Integer, String> {
 
     @Override
     protected void onPreExecute() {
-        textView.setText(timer.toString()+"");
+        DisplayTime();
     }
 
     @Override
     protected void onPostExecute(String s) {
-        textView.setText(timer.toString());
+        DisplayTime();
         floatingActionButton.setBackgroundTintList(ColorStateList.valueOf(Color.GREEN));
         Toast.makeText(context, s, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     protected void onProgressUpdate(Integer... values) {
-
-        //textView.setText(values[0].toString());
-        textView.setText(LocalTime.of(0,values[0], values[1]).toString());
+        //textView.setText(values[0]+":"+values[1]);
+        DisplayTime(values[0], values[1]);
     }
 
     @Override
     protected void onCancelled() {
         Toast.makeText(context, "annulé", Toast.LENGTH_SHORT).show();
         floatingActionButton.setBackgroundTintList(ColorStateList.valueOf(Color.GREEN));
-        textView.setText(timer.toString());
+        DisplayTime();
+    }
+    public void DisplayTime(){
+        int minutes = 0, seconds = 0;
+        String textToDisplay;
+        try {
+            minutes = timerInMilliseconds/60000;
+            seconds = (timerInMilliseconds/1000)%60;
+        }
+        catch (Exception e){
+            Log.d("Exception ===========>", "DisplayTime: "+e.getMessage());
+        }
+        if (minutes < 10){textToDisplay = "0"+minutes;}
+        else {textToDisplay = ( String.valueOf(minutes));}
+        if (seconds < 10){textToDisplay += ":0"+seconds;}
+        else {textToDisplay += ":"+String.valueOf(seconds);}
+
+        textView.setText(textToDisplay);
+    }
+    public void DisplayTime(Integer minutes, Integer seconds){
+        String textToDisplay;
+        if (minutes < 10){textToDisplay = "0"+minutes;}
+        else {textToDisplay = ( String.valueOf(minutes));}
+        if (seconds < 10){textToDisplay += ":0"+seconds;}
+        else {textToDisplay += ":"+String.valueOf(seconds);}
+
+        textView.setText(textToDisplay);
     }
 }
