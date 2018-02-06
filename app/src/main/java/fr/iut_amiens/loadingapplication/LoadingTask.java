@@ -24,7 +24,6 @@ public class LoadingTask extends AsyncTask<Object, Integer, String> {
         this.timerInMilliseconds = timerInMilliseconds;
         this.floatingActionButton = floatingActionButton;
     }
-
     @Override
     protected String doInBackground(Object[] params) {
         try {
@@ -63,7 +62,7 @@ public class LoadingTask extends AsyncTask<Object, Integer, String> {
 
     @Override
     protected void onProgressUpdate(Integer... values) {
-        //textView.setText(values[0]+":"+values[1]);
+        Log.d("=======================", "onProgressUpdate: "+values[0]+" "+values[1]);
         DisplayTime(values[0], values[1]);
     }
 

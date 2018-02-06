@@ -19,6 +19,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private int timerInMilliseconds = 0;
 
     @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        // Save the user's current game state
+        savedInstanceState.putInt("numberPickerMinutesValue", numberPickerMinutes.getValue());
+        savedInstanceState.putInt("numberPickerSecondsValue", numberPickerSeconds.getValue());
+        savedInstanceState.putInt("timerInMilliseconds", timerInMilliseconds);
+        savedInstanceState.putString("textView", textView.getText().toString());
+
+
+        // Always call the superclass so it can save the view hierarchy state
+        super.onSaveInstanceState(savedInstanceState);
+    }
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+        // Always call the superclass so it can restore the view hierarchy
+        super.onRestoreInstanceState(savedInstanceState);
+
+
+        // Restore state members from saved instance
+        numberPickerMinutes.setValue(savedInstanceState.getInt("numberPickerMinutesValue"));
+        numberPickerSeconds.setValue(savedInstanceState.getInt("numberPickerSecondsValue"));
+        timerInMilliseconds = savedInstanceState.getInt("timerInMilliseconds");
+        textView.setText(savedInstanceState.getString("textView"));
+    }
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -37,6 +60,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         numberPickerSeconds.setOnValueChangedListener(this);
         numberPickerMinutes.setOnValueChangedListener(this);
     }
+
 
     @Override
     public void onClick(View v) {
