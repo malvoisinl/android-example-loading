@@ -62,7 +62,7 @@ public class LoadingTask extends AsyncTask<Object, Integer, String> {
 
     @Override
     protected void onProgressUpdate(Integer... values) {
-        Log.d("=======================", "onProgressUpdate: "+values[0]+" "+values[1]);
+        //Log.d("=======================", "onProgressUpdate: "+values[0]+" "+values[1]);
         DisplayTime(values[0], values[1]);
     }
 
@@ -95,7 +95,7 @@ public class LoadingTask extends AsyncTask<Object, Integer, String> {
         else {textToDisplay = ( String.valueOf(minutes));}
         if (seconds < 10){textToDisplay += ":0"+seconds;}
         else {textToDisplay += ":"+String.valueOf(seconds);}
-
+        Log.d("=======================", "DisplayTime: "+textToDisplay+", textView : "+textView.getText());
         textView.setText(textToDisplay);
     }
 }

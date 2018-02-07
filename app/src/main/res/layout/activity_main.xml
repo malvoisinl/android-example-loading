@@ -10,14 +10,15 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="fr.iut_amiens.loadingapplication.MainActivity">
-
     <TextView
         android:id="@+id/timeLeft"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
         android:layout_alignTop="@+id/floatingActionButton"
         android:layout_toStartOf="@+id/floatingActionButton"
+        android:layout_toLeftOf="@+id/floatingActionButton"
         android:text="@string/timeLeftText"
         android:textAlignment="center"
         android:textSize="30sp" />
@@ -31,7 +32,9 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:layout_marginEnd="30dp"
-        android:layout_toStartOf="@+id/floatingActionButton" />
+        android:layout_marginRight="30dp"
+        android:layout_toStartOf="@+id/floatingActionButton"
+        android:layout_toLeftOf="@+id/floatingActionButton" />
 
     <NumberPicker
         android:id="@+id/numberPickerMinutes"
@@ -41,7 +44,8 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:layout_toStartOf="@+id/numberPickerSecond" />
+        android:layout_toStartOf="@+id/numberPickerSecond"
+        android:layout_toLeftOf="@+id/numberPickerSecond" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/floatingActionButton"
